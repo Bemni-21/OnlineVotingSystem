@@ -1,29 +1,71 @@
 import React, { useState } from "react";
 import "../index.css";
-import usericon from "../assets/images/userIcon.jpg"
-import backgroundImage from "../assets/images/background4.jpg"
+import usericon from "../assets/images/userIcon.jpg";
+import backgroundImage from "../assets/images/background4.jpg";
+
 const AuthPage = () => {
   const [isSignUp, setIsSignUp] = useState(false);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    name: "",
+    idnumber: "",
+    role: "voter",
+    department: "",
+    college: "",
+    phone: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
   const toggleAuthMode = () => {
     setIsSignUp((prevMode) => !prevMode);
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const url = isSignUp ? "/signup" : "/signin";
+    const method = "POST"; // Using POST for both sign-up and sign-in
+
+    try {
+      const response = await fetch(`http://localhost:5000${url}`, {
+        method: method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert(data.message || `${isSignUp ? "Sign up" : "Sign in"} successful!`);
+      } else {
+        alert(data.error || "Something went wrong!");
+      }
+    } catch (error) {
+      alert("Error: " + error.message);
+    }
+  };
+
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-2xl">
-        <img
-           className="mx-auto h-32 w-32"
-          src={usericon}
-          alt="Your Company"
-        />
+        <img className="mx-auto h-32 w-32" src={usericon} alt="Your Company" />
         <h2 className="mt-10 text-center text-2xl font-bold tracking-tight text-gray-900">
           {isSignUp ? "Create your account" : "Sign in to your account"}
         </h2>
       </div>
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-2xl">
-        <form className="space-y-6" action="#" method="POST">
+        <form className="space-y-6" onSubmit={handleSubmit}>
           {isSignUp ? (
             <>
               {/* Sign-up form with two columns */}
@@ -37,6 +79,8 @@ const AuthPage = () => {
                       type="email"
                       name="email"
                       id="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
                       required
                       className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-indigo-600 sm:text-sm"
                     />
@@ -52,6 +96,8 @@ const AuthPage = () => {
                       type="text"
                       name="name"
                       id="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
                       required
                       className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-indigo-600 sm:text-sm"
                     />
@@ -67,6 +113,8 @@ const AuthPage = () => {
                       type="text"
                       name="idnumber"
                       id="idnumber"
+                      value={formData.idnumber}
+                      onChange={handleInputChange}
                       required
                       className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-indigo-600 sm:text-sm"
                     />
@@ -81,6 +129,8 @@ const AuthPage = () => {
                     <select
                       name="role"
                       id="role"
+                      value={formData.role}
+                      onChange={handleInputChange}
                       required
                       className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 focus:outline-indigo-600 sm:text-sm"
                     >
@@ -99,6 +149,8 @@ const AuthPage = () => {
                       type="text"
                       name="department"
                       id="department"
+                      value={formData.department}
+                      onChange={handleInputChange}
                       required
                       className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-indigo-600 sm:text-sm"
                     />
@@ -114,6 +166,8 @@ const AuthPage = () => {
                       type="text"
                       name="college"
                       id="college"
+                      value={formData.college}
+                      onChange={handleInputChange}
                       required
                       className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-indigo-600 sm:text-sm"
                     />
@@ -129,6 +183,8 @@ const AuthPage = () => {
                       type="text"
                       name="phone"
                       id="phone"
+                      value={formData.phone}
+                      onChange={handleInputChange}
                       required
                       className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-indigo-600 sm:text-sm"
                     />
@@ -144,6 +200,8 @@ const AuthPage = () => {
                       type="password"
                       name="password"
                       id="password"
+                      value={formData.password}
+                      onChange={handleInputChange}
                       required
                       className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-indigo-600 sm:text-sm"
                     />
@@ -173,6 +231,8 @@ const AuthPage = () => {
                       type="email"
                       name="email"
                       id="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
                       required
                       className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-indigo-600 sm:text-sm"
                     />
@@ -188,6 +248,8 @@ const AuthPage = () => {
                       type="password"
                       name="password"
                       id="password"
+                      value={formData.password}
+                      onChange={handleInputChange}
                       required
                       className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-indigo-600 sm:text-sm"
                     />
@@ -205,7 +267,6 @@ const AuthPage = () => {
               </div>
             </>
           )}
-
         </form>
 
         <p className="mt-10 text-center text-sm text-gray-500">

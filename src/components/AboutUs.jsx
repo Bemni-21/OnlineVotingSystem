@@ -44,7 +44,7 @@ export default function AboutUs() {
             Wolkite University Student Union
           </h3>
           <p data-aos="fade-up" className="mt-8 text-pretty text-lg font-medium text-gray-300 sm:text-xl/8">
-            The Wolkite University Student Union (WUSU) is the official representative body of students at Wolkite University.
+            The Wolkite University Student Union (WKUSU) is the official representative body of students at Wolkite University.
             Established to ensure the welfare and rights of students, the union is known for its outstanding contributions to student life and its involvement in various national initiatives. With over 20 years of service, WUSU has earned national recognition for its leadership and success.
           </p>
         </div>
